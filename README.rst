@@ -2,7 +2,9 @@
 Rmock
 =======
 
-remote (server) mocks library
+The ``rmock`` is library for writing server mocks, with API inspired by `mock <http://www.voidspace.org.uk/python/mock/>`_ package.
+It`s designed to be used in unit and functional testing.
+A few communication protocols are implemented now, including http, memcache, smtp and pop3.
 
 Installation
 ============
@@ -10,7 +12,7 @@ You should clone project repo and run **python setup.py install** in main direct
 
 Dependencies
 ============
-Library was tested on python2.7/unix systems.
+Library was tested on python2.7 under Linux systems.
 
 Examples
 ========
@@ -33,6 +35,6 @@ rmock(name= runner=http(port=37666 slug=))
 
 Testing
 ============
-Tests use `nose <http://somethingaboutorange.com/mrl/projects/nose/>` and are located in tests directory.
-Before running tests dependecies should be installed, using **pip install -r requirements.txt**
+Tests use `nose <http://somethingaboutorange.com/mrl/projects/nose/>`_ and are located in tests directory.
+Before running them dependecies should be installed, using **pip install -r requirements.txt** command.
 
