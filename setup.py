@@ -33,7 +33,7 @@ setup(
     author_email='krzysztof.chmiel@grupaonet.pl',    
     package_dir = {'':'src'}, 
     packages=find_packages('src'),
-    long_description=read_file('README'),
+    long_description=read_file('README.rst'),
     install_requires=[
         'tornado>=2.0',
         'phpserialize>=1.2',
