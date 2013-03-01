@@ -34,6 +34,8 @@ import time
 
 import rmock
 
+from rmock.comparators import any_of
+from rmock.comparators import is_
 from rmock.tools import find_random_port
 from rmock import call
 
@@ -46,7 +48,8 @@ def rcpt_to(rcpt):
 class TestSmtp(object):
     
     PORT = find_random_port()
-    helo_name = socket.gethostbyaddr(socket.gethostname())[0]    
+    #helo_name = any_of(socket.gethostbyaddr(socket.gethostname()))    
+    helo_name = socket.gethostname()
     
     def setup(self):
         self.mock = rmock.run("smtp",

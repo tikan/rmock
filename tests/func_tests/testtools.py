@@ -17,6 +17,8 @@
 # http://www.gnu.org/licenses/lgpl.txt
 #
 
+import socket
+
 import requests
 import memcache
 
@@ -90,12 +92,14 @@ def memcache_set(mock, key, value, time=0, **kwargs):
     return memcache_call(mock, 'set', key, value, time=time, **kwargs)
 
 def smtp_call(mock, mail_from, rcpt_to, data, with_quit=False):
-    smtp = smtplib.SMTP('localhost', mock.runner_params.port)
+    smtp = smtplib.SMTP('localhost', mock.runner_params.port,
+                        local_hostname=socket.gethostname())
     
     return _smtp_call_impl(smtp, mail_from, rcpt_to, data, with_quit)
 
 def lmtp_call(mock, mail_from, rcpt_to, data, with_quit=False):
-    lmtp = smtplib.LMTP('localhost', mock.runner_params.port)
+    lmtp = smtplib.LMTP('localhost', mock.runner_params.port,
+                        local_hostname=socket.gethostname())
     return _smtp_call_impl(lmtp, mail_from, rcpt_to, data, with_quit)
 
 def _smtp_call_impl(smtp, mail_from, rcpt_to, data, with_quit):

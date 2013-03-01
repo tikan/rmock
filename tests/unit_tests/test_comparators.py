@@ -35,6 +35,7 @@ from rmock.comparators import less
 from rmock.comparators import less_eq
 from rmock.comparators import between
 from rmock.comparators import between_eq
+from rmock.comparators import any_of
 
 class TestComparators(object):
     
@@ -104,4 +105,11 @@ class TestComparators(object):
         assert_not_equals(1, between_eq(3, 4))
         assert_equals(1, between_eq(1, 2))
         assert_equals(2, between_eq(1, 2))
-            
+    
+    def test_any_of(self):
+        assert_equals(1, any_of((1, 2)))
+        assert_equals('any', any_of(('any')))
+        assert_equals('', any_of(['', None, 1]))
+        assert_not_equals('', any_of([]))
+        assert_not_equals('x', any_of(['y', 'z']))
+        
