@@ -78,8 +78,6 @@ class func_eq(object):
     def __eq__(self, other):
         return self.callable_(other)
     
-        #return isinstance(other, basestring) and self.regexp.match(other)
-    
     def __repr__(self):
         return "<callable '%s'>" % self.callable_
 
@@ -142,3 +140,14 @@ class between_eq(_between_base):
     
     def __repr__(self):
         return "<between %s and %s>" % (self.value1, self.value2)
+
+class any_of(object):
+    
+    def __init__(self, seq):
+        self.seq = seq
+    
+    def __eq__(self, other):
+        return other in self.seq
+        
+    def __repr__(self):
+        return '<any_of %s>' % (self.seq,)
