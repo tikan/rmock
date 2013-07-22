@@ -1,0 +1,4 @@
+*.pyc
+build
+dist
+src/rmock.egg-info
