@@ -2,15 +2,14 @@ FEATURES:
     - assert methods in separate class
     - syslog protocol
     - command mock         
-    - dynamic (automaticly visible in subprocesses) logging configuration changed
-    - more generic exception handling
-    - logowanie - format per module
+    - dynamic (automaticly visible in subprocesses) logging configuration change    - more generic exception handling
+    - logging - format per module
     - tornado logging as rmock logging
     - in_any_order suppoet in assert_has_calls
     - proxy mock - dynamic child modification
     - defining configuration option: add_option(...) 
     - loading configuration from string (yaml, json): may be useful in rmock_run 
-
+    - use pyhamcrest instead of home-made comparators
 BUGS:
     - DictSubset -> commutative, empty dicts
     - manager per whole application, not per mock -- restore
