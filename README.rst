@@ -2,7 +2,7 @@
 Rmock
 =======
 
-The ``rmock`` is library for writing server mocks, with API inspired by `mock <http://www.voidspace.org.uk/python/mock/>`_ package.
+The ``rmock`` is a python library for writing server mocks, with API inspired by `mock <http://www.voidspace.org.uk/python/mock/>`_ package.
 It`s designed to be used mainly in unit and functional testing.
 Http, memcache, smtp and pop3 protocols are implemented now, more will come out later.
 
@@ -18,20 +18,22 @@ Examples
 ========
 Here`s a basic usage example. More will be added later, you can also look into tests directory.
 
->>> import rmock
->>> import urllib2
->>> http_mock = rmock.run("http", port=37666)
->>> http_mock
-rmock(name= runner=http(port=37666 slug=))
->>> http_mock.function.return_value = "function result"
->>> url = 'http://localhost:37666/function?param=value'
->>> result = urllib2.urlopen(url).read()
->>> result
-'function result'
->>> assert result == "function result"
->>> http_mock.function.calls
-[call(funcname=function args=() kwargs={'param': 'value'})]
->>> http_mock.function.assert_called_with(param='value')
+.. code:: python
+
+	>>> import rmock
+	>>> import urllib2
+	>>> http_mock = rmock.run("http", port=37666)
+	>>> http_mock
+	rmock(name= runner=http(port=37666 slug=))
+	>>> http_mock.function.return_value = "function result"
+	>>> url = 'http://localhost:37666/function?param=value'
+	>>> result = urllib2.urlopen(url).read()
+	>>> result
+	'function result'
+	>>> assert result == "function result"
+	>>> http_mock.function.calls
+	[call(funcname=function args=() kwargs={'param': 'value'})]
+	>>> http_mock.function.assert_called_with(param='value')
 
 Testing
 ============
