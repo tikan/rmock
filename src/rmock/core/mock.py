@@ -58,7 +58,10 @@ class Rmock(object):
         
     def __getattr__(self, name):
         return RmockFunctionProxy(self, name)
-    
+
+    def empty(self):
+        return RmockFunctionProxy(self, '')
+
     def get_all_calls(self):
         return self._rmock_data.get_calls()
     
