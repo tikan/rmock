@@ -19,21 +19,19 @@
 
 import _pythonpath
 
-import logging
-import time
 from urllib2 import urlopen
 from urllib2 import HTTPError
+
+from nose.tools import assert_raises
+from nose.tools import assert_equals
+from nose.tools import assert_in
 
 import rmock
 
 from rmock.errors import RmockParamsError
 
 from rmock.runners.http import HttpCode
-
-from nose.tools import assert_raises
-from nose.tools import assert_equals
-from nose.tools import assert_in
-
+from rmock.runners.http import HttpResult
 from rmock.tools.net import find_random_port
 from testtools import http_call
 
@@ -282,7 +280,38 @@ class TestHttp(object):
             
             urlopen('http://localhost:%s/function2?data=dtd&s=10' % port)
             mock.function2.assert_called_with(data='dtd', s='10')
-    
+
+    @rmock.patch("http")
+    def test_http_http_result_set_code(self, mock):
+        code = 411
+        mock.func.return_value = HttpResult(code=code)
+
+        result = http_call(mock, 'func')
+        assert_equals(result.code, code)
+
+    @rmock.patch("http")
+    def test_http_http_result_set_body(self, mock):
+        body = "response body"
+        mock.func.return_value = HttpResult(body=body)
+
+        result = http_call(mock, 'func')
+        assert_equals(result.text, body)
+
+    @rmock.patch("http")
+    def test_http_set_response_headers(self, mock):
+
+        headers = [
+            ('Content-Type', 'application/json'),
+            ('my-header', 'my-value')
+        ]
+        mock.func.return_value = HttpResult(
+            headers=headers)
+
+        result = http_call(mock, 'func')
+
+        for header, value in headers:
+            assert_equals(result.headers[header], value)
+
     def teardown(self):
         self.mock.reset()
     

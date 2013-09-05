@@ -49,16 +49,15 @@ def with_exception_handling(func):
     
     return inner
 
-#TODO: use as generic http error
-#class CallError(Exception):
-#    pass
-
-class HttpCode(object):
-    
-    def __init__(self, code):
+class HttpResult(object):
+    def __init__(self, code=200, body=None, headers=None):
         self.code = code
+        self.headers = headers
+        self.body = body
 
-HttpCodeError = HTTPError
+# new code should use HttpResult instead of HttpCode
+# HttpCode will me marked as deprecated in the near future
+HttpCode = HttpCodeError = HttpResult
 
 class MockHttpHandler(RequestHandler):
     
@@ -95,7 +94,7 @@ class MockHttpHandler(RequestHandler):
     
     get = process_http_method    
     post = process_http_method
-    
+
     def _write_result(self, result):
         logger.debug("call result: %s", result)
         
@@ -120,11 +119,22 @@ class MockHttpHandler(RequestHandler):
             funcname, args, kwargs, headers
         )
         
-        if isinstance(result, HttpCode):
-            raise HTTPError(result.code)
-        
+        result = self._transform_result(result)
+
         logger.debug("result: %s", result)
         
+        return result
+
+    def _transform_result(self, result):
+        if isinstance(result, HttpResult):
+            if result.code != 200:
+                raise HTTPError(result.code)
+            if result.headers is not None:
+                for header, value in result.headers:
+                    self.set_header(header, value)
+
+            result = result.body
+
         return result
 
     def _process_function_call_impl(self, funcname, args, kwargs, headers):

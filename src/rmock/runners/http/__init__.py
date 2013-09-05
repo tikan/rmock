@@ -21,4 +21,5 @@ from .runner import HttpRunner
 from .proxy import HttpProxyRunner
 from .runner import HttpCode
 from .runner import HttpCodeError
+from .handler import HttpResult
 from .protocols.jsonrpc import JsonRPCError
