@@ -23,9 +23,6 @@ import time
 
 from multiprocessing import Process
 
-#import multiprocessing
-#multiprocessing.log_to_stderr()
-
 from rmock.core import RmockFunctionProxy
 from rmock.errors import RmockStartError
 

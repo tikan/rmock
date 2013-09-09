@@ -58,7 +58,6 @@ class Pop3ProtocolError(Exception):
 class Pop3RequestHandler(StreamRequestHandler):
     
     def handle(self):
-        
         self.quitted = False
         self.impl = self.server.impl
         self.username = None
@@ -99,7 +98,6 @@ class Pop3RequestHandler(StreamRequestHandler):
                 self._send_error_response('unknown command: %s' % funcname)
     
     def _handle_connect(self, params):
-        
         welcome = self.impl.connect()
         self._send_single_response(welcome)
     
@@ -120,7 +118,6 @@ class Pop3RequestHandler(StreamRequestHandler):
         self._send_single_response(result)
     
     def _handle_uidl(self, params):
-        
         self._verify_logged_in()
         uids = self.impl.uidl()
         uids_nr = list(enumerate(uids, 1))
@@ -135,7 +132,6 @@ class Pop3RequestHandler(StreamRequestHandler):
             self._send_multi_response('', lines)
     
     def _handle_retr(self, params):
-        
         self._verify_logged_in()        
         nr, = self._checked_get_params(params, 1)
         
@@ -145,7 +141,6 @@ class Pop3RequestHandler(StreamRequestHandler):
         self._send_multi_response(header, content)
     
     def _handle_top(self, params):
-        
         self._verify_logged_in()        
         nr, = self._checked_get_params(params, 1)
         uid = self._get_uid_for_number(nr)
@@ -154,7 +149,6 @@ class Pop3RequestHandler(StreamRequestHandler):
         self._send_multi_response('', content)
     
     def _handle_dele(self, params):
-        
         self._verify_logged_in()        
         nr, = self._checked_get_params(params, 1)
         uid = self._get_uid_for_number(nr)
@@ -200,8 +194,7 @@ class Pop3RequestHandler(StreamRequestHandler):
             self._send_response(value)
     
     def _send_response(self, message):
-        #logger.info("response: %s", value)
-        logger.debug("response: %s", message) 
+        logger.debug("response: %s", message)
         self.wfile.write(message + "\r\n")
     
     def _send_single_response(self, message):
@@ -246,7 +239,6 @@ class Pop3Server(TCPServer):
         TCPServer.server_bind(self)
     
     def handle_error(self, request, client_address):
-            
         etype = sys.exc_info()[0]
         if etype is SystemExit:
             raise

@@ -43,7 +43,6 @@ class RawProtocol(object):
         self.slug = slug
         
     def loads(self, method, url, body):
-        
         url = self.url_sub_re.sub('/', url)
         parsed_url = urlparse.urlparse(url)
         
@@ -54,12 +53,8 @@ class RawProtocol(object):
     
     def dumps(self, result):
         return result
-    
-#    def dumps_error(self, status, data):
-#        return self._serialize_dict({}, status=status)
-    
+
     def _get_funcname(self, parsed_url):
-        
         funcname = parsed_url.path.strip('/')
                 
         if self.slug:
@@ -74,7 +69,6 @@ class RawProtocol(object):
         return funcname, suffix
     
     def _get_funcname_arguments(self, method, parsed_url, body):
-        
         if method not in ('get', 'post'):
             raise RmockError("unsupported http method: %s" % self.request.method)
          

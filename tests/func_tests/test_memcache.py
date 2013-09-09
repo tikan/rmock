@@ -142,8 +142,6 @@ class TestMemcache(object):
             
             client2.get('b')
             client1.get('c')
-            #client2.disconnect_all()
-            #del client2
             
             set_result = client1.set('b', 'a')
             assert_true(set_result)
