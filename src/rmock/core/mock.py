@@ -56,6 +56,8 @@ class Rmock(object):
     def __getattr__(self, name):
         return RmockFunctionProxy(self, name)
 
+    __getitem__ = __getattr__
+
     def empty(self):
         return RmockFunctionProxy(self, '')
 
