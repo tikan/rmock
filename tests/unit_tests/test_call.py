@@ -20,10 +20,17 @@
 from nose.tools import assert_equals
 from nose.tools import assert_not_equals
 from nose.tools import assert_true
+from nose.tools import assert_raises
 
 from rmock import call
 from rmock import call_subset
 from rmock import params_subset
+
+def test_call_indexing():
+    cl = call(1, a=20)
+    assert_equals(cl[0], (1,))
+    assert_equals(cl[1], {'a': 20})
+    assert_raises(IndexError, cl.__getitem__, 2)
 
 def test_call_simple():
     assert_equals(call(), call())
@@ -41,6 +48,7 @@ def test_call_with_params_subset():
     
     assert_not_equals(call(params_subset(a=10, b=30)),
                       call(params_subset(a=10, b=20)))
+
 def test_call_subset():
     assert_equals(call_subset(), call_subset(),)
     

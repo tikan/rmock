@@ -26,8 +26,9 @@ class Call(object):
         self.funcname = None
         self.headers = None
     
-    def __getitem__(self, key):
-        return (self.args, self.kwargs)(key)
+    def __getitem__(self, index):
+        """Allow tuple-like access"""
+        return (self.args, self.kwargs)[index]
     
     @staticmethod
     def _make(funcname, args, kwargs, headers=None):
