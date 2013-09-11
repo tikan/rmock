@@ -96,6 +96,17 @@ class TestRmockGeneric(object):
         assert_equals(len(mock.func.calls), 2)
         assert_equals(mock.func.calls[0].args, ())
         assert_equals(mock.func.calls[0].kwargs, {'arg': 'val'})
+
+    @rmock.patch(port="random")
+    def test_function_getitem_syntax(self, mock):
+        mock['func-name'].return_value = 'result'
+
+        assert_equals(http_call(mock, 'func-name').text, 'result')
+        assert_equals(http_call(mock, 'func2').text, '')
+
+        assert_equals(len(mock['func-name'].calls), 1)
+        assert_equals(mock['func-name'].calls[0].args, ())
+        assert_equals(mock['func-name'].calls[0].kwargs, {})
     
     def test_rmock_create(self):
         mock = rmock.create("http", port="random")
