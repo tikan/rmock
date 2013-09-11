@@ -48,9 +48,10 @@ def rcpt_to(rcpt):
 class TestSmtp(object):
     
     PORT = find_random_port()
-    #helo_name = any_of(socket.gethostbyaddr(socket.gethostname()))    
+
+    # local_hostname which is used in smtp_call helper
     helo_name = socket.gethostname()
-    
+
     def setup(self):
         self.mock = rmock.run("smtp",
                               port=self.PORT)
@@ -131,8 +132,9 @@ class TestSmtp(object):
              whole_session=True,
              classvar="smtp_mock")
 class TestSmtpWholeSession(object):
-   
-    helo_name = socket.gethostbyaddr(socket.gethostname())[0]
+
+    # local_hostname which is used in smtp_call helper
+    helo_name = socket.gethostname()
  
     def test_whole_session_simple_email(self):
         smtp_call(self.smtp_mock,
