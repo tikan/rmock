@@ -25,15 +25,23 @@ from rmock import config
 logger = logging.getLogger("rmock.tools")
 
 def len_trim(s, max_len=100):
-
+    """Trim given string to given length, adding ... if needed"""
     if len(s) <= max_len:
         return s
     
     return s[:max_len - 3] + '...'
 
 def dict_apply(dct, callback, make_copy=True):
-    
-    elem = copy.deepcopy(dct) if make_copy else dct 
+    """
+    `map` equivalent for dict values
+
+    :param dct: mapping
+    :param callback: one argument function which is applied to each value of mapping
+    :param make_copy: if it's True then deep copy of mapping is created and returned; if
+        it's False then mapping is modified inplace and then returned
+    :return: original, modified dictionary or deep copy of it, depending on `make_copy` parameter value
+    """
+    elem = copy.deepcopy(dct) if make_copy else dct
     return _dict_apply_impl(elem, callback)
 
 def _dict_apply_impl(elem, callback):
@@ -51,7 +59,12 @@ def _dict_apply_impl(elem, callback):
     return elem
 
 def len_trim_dict(dct, max_len=None):
-    
+    """
+    Apply `len_trim` to all mapping values
+
+    :param max_len: `max_len` argument to `len_trim`; if not specified then
+        value from rmock configuration is used
+    """
     if max_len is None:
         max_len = config.get_config()['trim_len']
     
@@ -68,7 +81,9 @@ def dict_contains(dcta, dctb):
     return all(key in dctb and dcta[key] == dctb[key] for key in dcta)
 
 class attr_dict(dict):
-    
+
+    """Mapping which allows attribute-like access to its keys"""
+
     def __setattr__(self, item, value):
         self[item] = value
     

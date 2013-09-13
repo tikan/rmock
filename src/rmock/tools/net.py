@@ -27,13 +27,17 @@ RANDOM_PORT_RANGE_START = 1024
 RANDOM_PORT_RANGE_END = 65535
 
 def find_random_port(tries=None):
-    
+    """
+    Randomly select unused port
+
+    TODO:use port 0 method, i.e. `tornado.testing.bind_unused_port`
+    """
     if tries is None:
         tries = config.get_config()['random_port_tries']    
-    
+
     while tries:
         port = random.randint(RANDOM_PORT_RANGE_START, RANDOM_PORT_RANGE_END)
-        
+
         try:
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.bind(('', port))
@@ -41,16 +45,20 @@ def find_random_port(tries=None):
             pass
         else:
             return port
-        
+
         tries -= 1
-    
+
     raise RmockError("error finding random port; tries number exceeded")
 
 class RANDOM_PORT(object):
+
+    """Random port tag class"""
+
     pass
 
 def find_port(port):
+    """Return given port or random unused port"""
     if port in (0, None, RANDOM_PORT, 'random', 'RANDOM'):
         return find_random_port()
-    
+
     return port
