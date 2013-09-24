@@ -93,7 +93,9 @@ class MockHttpHandler(RequestHandler):
         self._write_result(result)
     
     get = process_http_method    
+    put = process_http_method
     post = process_http_method
+    delete = process_http_method
 
     def _write_result(self, result):
         logger.debug("call result: %s", result)

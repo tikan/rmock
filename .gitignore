@@ -2,3 +2,4 @@
 build
 dist
 src/rmock.egg-info
+/tests/.noseids
