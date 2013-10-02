@@ -44,7 +44,7 @@ RmockProcessManager.register('RmockData', RmockData)
 logger = logging.debug("rmock.manager")
 
 class RmockRunManager(object):
-    
+
     _runners = {'http': HttpRunner,
                 'smtp': SmtpRunner,
                 'lmtp': LmtpRunner,
@@ -64,7 +64,6 @@ class RmockRunManager(object):
                runner='http',
                *args,
                **kwargs):
-        
         name = kwargs.pop('key', None) or kwargs.pop('name', None)
         spec = kwargs.pop('spec', None) or kwargs.pop('config', None)
         autospec = kwargs.pop('autospec', None)
@@ -74,7 +73,7 @@ class RmockRunManager(object):
         if mock is not None:
             return mock
         
-        # TODO: oner manager per application
+        # TODO: one manager per application
         #if self._process_manager is None:
         self._process_manager = RmockProcessManager()
         self._process_manager.start()
@@ -95,7 +94,6 @@ class RmockRunManager(object):
                      name=name,
                      spec=spec,
                      autospec=autospec)
-        
         if name is not None:
             self._mocks[name] = mock
         
@@ -105,7 +103,6 @@ class RmockRunManager(object):
             runner='http',
             *args,
             **kwargs):
-        
         mock = self.create(runner, *args, **kwargs)
         mock.start_server() 
         
@@ -121,15 +118,11 @@ class RmockRunManager(object):
         RmockProcessManager.register(name, class_)
     
     def create_remote(self, cls, *args, **kwargs):
-        
         remote_cls = getattr(self._process_manager, cls.__name__)
-        
         return remote_cls(*args, **kwargs)
     
     def configure(self, **kwargs):
-        
         conf = rmock.config.get_config()
-        
         for key in kwargs:
             if key not in kwargs:
                 raise RmockError("unknown config item: %s" % key)
@@ -140,7 +133,6 @@ class RmockRunManager(object):
                        level=logging.INFO,
                        handler=None,
                        format_="%(name)s[%(process)s] %(message)s"):
-        
         if isinstance(level, basestring):
             level = level.upper()
         

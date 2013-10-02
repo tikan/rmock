@@ -183,12 +183,10 @@ class RmockData(object):
         self.frozen = True
     
     def _verify_call_allowed(self, funcname, args, kwargs):
-                        
         if self.frozen and funcname not in self.results:
             raise InvalidFunction("Function %s not allowed" % funcname)
     
     def _remove_current_result(self, func_results, result_params):
-        
         current_result = next(((params, result)
             for (params, result) in func_results if params == result_params),
             None
@@ -201,7 +199,6 @@ class RmockData(object):
         return self._make_result(self.default_result, *args, **kwargs)
     
     def _make_result(self, result, *args, **kwargs):
-        
         if hasattr(result, '__call__'):
             return result(*args, **kwargs)
         

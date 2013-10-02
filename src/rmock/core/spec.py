@@ -18,7 +18,7 @@
 #
 
 class Spec(object):
-    
+
     def __init__(self):
         self.mod_callbacks = []
     

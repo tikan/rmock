@@ -31,7 +31,7 @@ from rmock.config import get_config
 conf = get_config()
 
 class RmockFunctionProxy(object):
-    
+
     def __init__(self, parent_rmock, funcname):
         self.args = None
         self.kwargs = None

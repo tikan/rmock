@@ -47,7 +47,6 @@ class DictSubset(dict):
 
     """
     def __eq__(self, other):
-        
         if not isinstance(other, dict):
             return dict.__eq__(self, other)
                 
@@ -59,6 +58,6 @@ class DictSubset(dict):
             return dict_contains(self, other)
 
 class CallSubset(Call):
-    
+
     def __init__(self, *args, **kwargs):
         Call.__init__(self, ParamsSubset(*args, **kwargs))

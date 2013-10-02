@@ -103,7 +103,6 @@ class Rmock(object):
         self._runner_proccess.join()
         
     def start_server(self):
-        
         if self._server_started:
             logger.debug("server already started; ignoring")
             return
@@ -126,7 +125,6 @@ class Rmock(object):
         self._server_started = True
     
     def stop_server(self):
-        
         if self._runner_proccess is not None:
             logger.debug("terminating process %s", self._runner_proccess.pid)
             self._runner_proccess.terminate()

@@ -39,7 +39,6 @@ class Call(object):
         return result
     
     def _to_tuple(self, ext=False):
-                
         if ext:
             return (self.funcname, self.args, self.kwargs)
         
@@ -57,7 +56,6 @@ class Call(object):
         return self._to_tuple(ext=ext) == value
     
     def __str__(self):
-        
         if self.funcname is not None:
             pattern = "call(funcname={funcname} args={args} kwargs={kwargs})"
         else:
