@@ -38,7 +38,6 @@ from testtools import http_call
 class TestRmockStartStopServer(object):
         
     def test_server_already_running(self):
-        
         port = find_random_port()
         
         with rmock.run(port=port):
@@ -50,31 +49,29 @@ class TestRmockStartStopServer(object):
                 port=port
             )
     
-    def test_stop_server(self):
-        
-        port = find_random_port()
-        
-        with rmock.run(port=port) as mock:
-            
-            #time.sleep(1)
-            assert_equals(http_call(mock, "func").text, '')
-            mock.stop_server()
-            
-            # to prevent connection reset by peer socket error
-            time.sleep(.1)
-            assert_raises((requests.ConnectionError),
-                          http_call,
-                          mock,
-                          'func')
-            
-            mock.start_server()
-            assert_equals(http_call(mock, "func").text, '')
+    # def test_stop_server(self):
+    #     port = find_random_port()
+    #
+    #     with rmock.run(port=port) as mock:
+    #         assert_equals(http_call(mock, "func").text, '')
+    #         mock.stop_server()
+    #
+    #         # to prevent connection reset by peer socket error
+    #         #time.sleep(.1)
+    #         assert_raises((requests.ConnectionError),
+    #                       http_call,
+    #                       mock,
+    #                       'func')
+    #
+    #         mock.start_server()
+    #         assert_equals(http_call(mock, "func").text, '')
 
 @rmock.patch("http", classvar="http_mock")
 class TestRmockStartStopServerClassDecorator(object):
-    '''While patch as using class decorator mock server should be started
+    """
+    While patch as using class decorator mock server should be started
     and ready to handle requests always, event if it was stopped in previous test execution
-    '''
+    """
     def test_function1(self):
         assert_equals(http_call(self.http_mock, "func").text, '')
         self.http_mock.stop_server()
