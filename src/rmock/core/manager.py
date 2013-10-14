@@ -41,7 +41,7 @@ class RmockProcessManager(multiprocessing.managers.SyncManager):
 
 RmockProcessManager.register('RmockData', RmockData)
 
-logger = logging.debug("rmock.manager")
+logger = logging.getLogger("rmock.manager")
 
 class RmockRunManager(object):
 
