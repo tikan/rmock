@@ -67,14 +67,13 @@ class RmockRunManager(object):
         name = kwargs.pop('key', None) or kwargs.pop('name', None)
         spec = kwargs.pop('spec', None) or kwargs.pop('config', None)
         autospec = kwargs.pop('autospec', None)
-                
+        return_value = kwargs.pop('return_value', None)
+
         mock = self._mocks.get(name)
         
         if mock is not None:
             return mock
-        
-        # TODO: one manager per application
-        #if self._process_manager is None:
+
         self._process_manager = RmockProcessManager()
         self._process_manager.start()
         
@@ -93,7 +92,8 @@ class RmockRunManager(object):
                      rmock_data,
                      name=name,
                      spec=spec,
-                     autospec=autospec)
+                     autospec=autospec,
+                     return_value=return_value)
         if name is not None:
             self._mocks[name] = mock
         

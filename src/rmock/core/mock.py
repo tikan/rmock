@@ -37,10 +37,11 @@ class Rmock(object):
                  rmock_data,
                  name=None,
                  spec=None,
-                 autospec=False):
+                 autospec=False,
+                 return_value=None):
         
         self._runner = runner
-        self._rmock_data = rmock_data #self._rmock_manager.RmockData()
+        self._rmock_data = rmock_data
         self._spec = spec
         self._runner_proccess = None
         self._autospec = autospec
@@ -50,7 +51,10 @@ class Rmock(object):
         if self._spec:
             self._spec.add_modified_callback(self.apply_spec)
             self.apply_spec()
-        
+
+        if return_value:
+            self.set_default_return_value(return_value)
+
         self._server_started = False
         
     def __getattr__(self, name):
