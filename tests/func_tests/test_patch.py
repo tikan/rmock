@@ -51,6 +51,14 @@ class TestRmockPatch(object):
         http_mock.func.assert_called_with()
         memcache_mock.get.assert_called_with('???')
 
+    @rmock.patch(port=RANDOM_PORT, return_value="default_return_value")
+    def test_patch_return_value(self, http_mock):
+        result = http_call(http_mock, 'func')
+        assert_equals(result.text, "default_return_value")
+
+        result = http_call(http_mock, 'func222')
+        assert_equals(result.text, "default_return_value")
+
 @rmock.patch(port=RANDOM_PORT)
 @rmock.patch(port=RANDOM_PORT)
 class TestRmockPatchClass(object):
@@ -74,10 +82,22 @@ class TestRmockPatchClass(object):
         mock2.func.assert_called_with()
         
         self.utility()
-    
+
     #not patched
     def utility(self):
         pass
+
+
+
+@rmock.patch(port=RANDOM_PORT, return_value="default_return_value")
+class TestRmockPatchClassReturnValue(object):
+    def test_return_value1(self, http_mock):
+        result = http_call(http_mock, 'func')
+        assert_equals(result.text, "default_return_value")
+
+        result = http_call(http_mock, 'func222')
+        assert_equals(result.text, "default_return_value")
+
 
 @rmock.patch(port=RANDOM_PORT,
              classvar='mymock')
