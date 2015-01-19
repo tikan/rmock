@@ -28,7 +28,7 @@ setup(
     name='rmock',
     version='0.3.2',
     description='remote mocks library',
-    url='http://doc.grupa.onet/display/Poczta',    
+    url='https://github.com/tikan/rmock',
     author='Krzysztof Chmiel',
     author_email='krzysztof.chmiel@grupaonet.pl',    
     package_dir = {'':'src'}, 
